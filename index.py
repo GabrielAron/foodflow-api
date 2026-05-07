@@ -216,3 +216,5 @@ while True:
         limpar_numeros(numeros)
     else:
         print("Opção inválida. Por favor, escolha uma opção válida.")
+
+        asdlkasdsa
