@@ -67,57 +67,152 @@
 
 # print(f"Números maiores que 10: {numeros_filtrados}")
 # print(f"Média: {media:.2f}")
-def maior_que_10(lista):
-    return [n for n in lista if n > 10]
+# def maior_que_10(lista):
+#     return [n for n in lista if n > 10]
 
-def calcular_media(lista):
-    if not lista:
-        return 0
-    return sum(lista) / len(lista)
+# def calcular_media(lista):
+#     if not lista:
+#         return 0
+#     return sum(lista) / len(lista)
 
 
-numeros = []
-maior = None 
-menor = None
+# numeros = []
+# maior = None 
+# menor = None
 
-while True:
-    entrada_texto = input('Digite um número (0 para sair): ').strip()
+# while True:
+#     entrada_texto = input('Digite um número (0 para sair): ').strip()
 
-    if not entrada_texto:
-        print('Por favor, digite um valor.')
-        continue
+#     if not entrada_texto:
+#         print('Por favor, digite um valor.')
+#         continue
         
+#     try:
+#         entrada = int(entrada_texto)
+#     except ValueError:
+#         print('Entrada inválida. Digite um número inteiro.')
+#         continue
+
+#     if entrada == 0:
+#         break
+#     elif entrada < 0:
+#         print('Número negativo não é permitido.')
+#     else:
+#         numeros.append(entrada)
+
+#         if maior is None or entrada > maior:
+#             maior = entrada
+#         if menor is None or entrada < menor:
+#             menor = entrada
+
+# print(f'\nNúmeros digitados: {numeros}')
+
+# quantidade = len(numeros)
+
+# filtrados = sorted(maior_que_10(numeros), reverse=True)
+# media = calcular_media(filtrados)
+
+# print(f'Números maiores que 10: {filtrados}')
+# print(f'Quantidade de números: {quantidade}')
+# print(f'Média: {media:.2f}')
+
+# if numeros:
+#     print(f'Maior número digitado: {maior}')
+#     print(f'Menor número digitado: {menor}')
+# else:
+#     print("Nenhum número foi digitado.")
+    
+# numeros = []        
+# while True:
+#     print("\n--- MENU ---")
+#     print("1 - Adicionar número")
+#     print("2 - Ver números")
+#     print("3 - Ver estatísticas")
+#     print("4 - Sair")
+#     print("5 - Limpar números")
+
+#     opcao = input("Escolha uma opção: ")
+
+#     if opcao == "1":
+#         try:
+#             numero = int(input("Digite um número: ").strip())
+#             numeros.append(numero)
+#             print(f"Número {numero} adicionado com sucesso!")
+#         except ValueError:
+#             print("Digite apenas números.")
+#     elif opcao == "2":
+#         print(f"Números digitados: {numeros}")
+#     elif opcao == "3":
+#         if numeros:
+#             quantidade = len(numeros)
+#             media = sum(numeros) / len(numeros)
+
+#             print(f"Quantidade de números: {quantidade}")
+#             print(f"Média: {media:.2f}")
+#             print(f"Maior número: {max(numeros)}")
+#             print(f"Menor número: {min(numeros)}")
+#         else:
+#             print("Nenhum número cadastrado.")
+#     elif opcao == "4":
+#         print("Saindo...")
+#         break
+#     elif opcao == "5":
+#         numeros.clear()
+#         print("Números limpos com sucesso!")
+#     else:
+#         print("Opção inválida. Por favor, escolha uma opção válida.")
+
+def adicionar_numero(lista):
     try:
-        entrada = int(entrada_texto)
+        numero = int(input("Digite um número: ").strip())
+        lista.append(numero)
+        print(f"Número {numero} adicionado com sucesso!")
     except ValueError:
-        print('Entrada inválida. Digite um número inteiro.')
-        continue
+        print("Digite apenas números.")
 
-    if entrada == 0:
-        break
-    elif entrada < 0:
-        print('Número negativo não é permitido.')
+def mostrar_numeros(lista):
+    if lista:
+        print(f"Números digitados: {lista}")        
     else:
-        numeros.append(entrada)
+        print("Nenhum número digitado.")
 
-        if maior is None or entrada > maior:
-            maior = entrada
-        if menor is None or entrada < menor:
-            menor = entrada
+def mostrar_estatisticas(lista):
+    if lista:
+        quantidade = len(lista)
+        media = sum(lista) / len(lista)
 
-print(f'\nNúmeros digitados: {numeros}')
+        print(f"Quantidade de números: {quantidade}")
+        print(f"Média: {media:.2f}")
+        print(f"Maior número: {max(lista)}")
+        print(f"Menor número: {min(lista)}")
+    else:
+        print("Nenhum número cadastrado.")          
 
-quantidade = len(numeros)
+def limpar_numeros(lista):
+    lista.clear()
+    print("Números limpos com sucesso!")        
 
-filtrados = sorted(maior_que_10(numeros), reverse=True)
-media = calcular_media(filtrados)
+numeros = []        
+while True:
+    print("\n--- MENU ---")
+    print("1 - Adicionar número")
+    print("2 - Ver números")
+    print("3 - Ver estatísticas")
+    print("4 - Sair")
+    print("5 - Limpar números")
 
-print(f'Números maiores que 10: {filtrados}')
-print(f'Quantidade de números: {quantidade}')
-print(f'Média: {media:.2f}')
+    opcao = input("Escolha uma opção: ")
 
-if numeros:
-    print(f'Maior número digitado: {maior}')
-    print(f'Menor número digitado: {menor}')
-else:
-    print("Nenhum número foi digitado.")
+    if opcao == "1":
+        adicionar_numero(numeros)
+    elif opcao == "2":
+        mostrar_numeros(numeros)
+    elif opcao == "3":
+        mostrar_estatisticas(numeros)
+    elif opcao == "4":
+        print("Saindo...")
+        break
+    elif opcao == "5":
+        limpar_numeros(numeros)
+    else:
+        print("Opção inválida. Por favor, escolha uma opção válida.")
