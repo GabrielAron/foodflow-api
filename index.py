@@ -162,59 +162,201 @@
 #     else:
 #         print("Opção inválida. Por favor, escolha uma opção válida.")
 
-def adicionar_numero(lista):
+# def adicionar_numero(lista):
+#     try:
+#         numero = int(input("Digite um número: ").strip())
+#         lista.append(numero)
+#         print(f"Número {numero} adicionado com sucesso!")
+#     except ValueError:
+#         print("Digite apenas números.")
+
+# def mostrar_numeros(lista):
+#     if lista:
+#         print(f"Números digitados: {lista}")        
+#     else:
+#         print("Nenhum número digitado.")
+
+# def mostrar_estatisticas(lista):
+#     if lista:
+#         quantidade = len(lista)
+#         media = sum(lista) / len(lista)
+
+#         print(f"Quantidade de números: {quantidade}")
+#         print(f"Média: {media:.2f}")
+#         print(f"Maior número: {max(lista)}")
+#         print(f"Menor número: {min(lista)}")
+#     else:
+#         print("Nenhum número cadastrado.")          
+
+# def limpar_numeros(lista):
+#     lista.clear()
+#     print("Números limpos com sucesso!")        
+
+# numeros = []        
+# while True:
+#     print("\n--- MENU ---")
+#     print("1 - Adicionar número")
+#     print("2 - Ver números")
+#     print("3 - Ver estatísticas")
+#     print("4 - Sair")
+#     print("5 - Limpar números")
+
+#     opcao = input("Escolha uma opção: ")
+
+#     if opcao == "1":
+#         adicionar_numero(numeros)
+#     elif opcao == "2":
+#         mostrar_numeros(numeros)
+#     elif opcao == "3":
+#         mostrar_estatisticas(numeros)
+#     elif opcao == "4":
+#         print("Saindo...")
+#         break
+#     elif opcao == "5":
+#         limpar_numeros(numeros)
+#     else:
+#         print("Opção inválida. Por favor, escolha uma opção válida.")
+import json
+
+
+def salvar_pessoas(lista):
+    with open("pessoas.json", "w", encoding="utf-8") as arquivo:
+        json.dump(lista, arquivo, indent=4, ensure_ascii=False)
+
+
+def carregar_pessoas():
     try:
-        numero = int(input("Digite um número: ").strip())
-        lista.append(numero)
-        print(f"Número {numero} adicionado com sucesso!")
+        with open("pessoas.json", "r", encoding="utf-8") as arquivo:
+            return json.load(arquivo)
+
+    except FileNotFoundError:
+        return []
+
+
+def adicionar_pessoa(lista):
+    nome = input("Digite o nome da pessoa: ").strip()
+
+    try:
+        idade = int(input("Digite a idade da pessoa: ").strip())
+
     except ValueError:
-        print("Digite apenas números.")
+        print("Digite uma idade válida.")
+        return
 
-def mostrar_numeros(lista):
+    pessoa = {
+        "nome": nome,
+        "idade": idade
+    }
+
+    lista.append(pessoa)
+
+    salvar_pessoas(lista)
+
+    print(f"{nome} adicionado(a) com sucesso!")
+
+
+def mostrar_pessoas(lista):
+
     if lista:
-        print(f"Números digitados: {lista}")        
+
+        print("\n--- PESSOAS CADASTRADAS ---")
+
+        for pessoa in lista:
+            print(
+                f"Nome: {pessoa['nome']} | "
+                f"Idade: {pessoa['idade']}"
+            )
+
     else:
-        print("Nenhum número digitado.")
+        print("Nenhuma pessoa cadastrada.")
 
-def mostrar_estatisticas(lista):
-    if lista:
-        quantidade = len(lista)
-        media = sum(lista) / len(lista)
 
-        print(f"Quantidade de números: {quantidade}")
-        print(f"Média: {media:.2f}")
-        print(f"Maior número: {max(lista)}")
-        print(f"Menor número: {min(lista)}")
-    else:
-        print("Nenhum número cadastrado.")          
+def buscar_pessoa(lista):
 
-def limpar_numeros(lista):
+    nome_busca = input(
+        "Digite o nome da pessoa que deseja buscar: "
+    ).strip()
+
+    for pessoa in lista:
+
+        if pessoa["nome"].lower() == nome_busca.lower():
+
+            print("\nPessoa encontrada!")
+            print(f"Nome: {pessoa['nome']}")
+            print(f"Idade: {pessoa['idade']}")
+
+            return
+
+    print("Pessoa não encontrada.")
+
+
+def remover_pessoa(lista):
+
+    nome_remover = input(
+        "Digite o nome da pessoa que deseja remover: "
+    ).strip()
+
+    for pessoa in lista:
+
+        if pessoa["nome"].lower() == nome_remover.lower():
+
+            lista.remove(pessoa)
+
+            salvar_pessoas(lista)
+
+            print(f"{nome_remover} removido(a) com sucesso!")
+
+            return
+
+    print("Pessoa não encontrada.")
+
+
+def limpar_pessoas(lista):
+
     lista.clear()
-    print("Números limpos com sucesso!")        
 
-numeros = []        
+    salvar_pessoas(lista)
+
+    print("Todas as pessoas foram removidas!")
+
+
+# Carrega os dados do arquivo JSON
+pessoas = carregar_pessoas()
+
+
 while True:
-    print("\n--- MENU ---")
-    print("1 - Adicionar número")
-    print("2 - Ver números")
-    print("3 - Ver estatísticas")
-    print("4 - Sair")
-    print("5 - Limpar números")
 
-    opcao = input("Escolha uma opção: ")
+    print("\n" + "=" * 30)
+    print("      MENU PRINCIPAL")
+    print("=" * 30)
+
+    print("1 - Cadastrar pessoa")
+    print("2 - Listar pessoas")
+    print("3 - Buscar pessoa")
+    print("4 - Remover pessoa")
+    print("5 - Limpar pessoas")
+    print("6 - Sair")
+
+    opcao = input("\nEscolha uma opção: ").strip()
 
     if opcao == "1":
-        adicionar_numero(numeros)
-    elif opcao == "2":
-        mostrar_numeros(numeros)
-    elif opcao == "3":
-        mostrar_estatisticas(numeros)
-    elif opcao == "4":
-        print("Saindo...")
-        break
-    elif opcao == "5":
-        limpar_numeros(numeros)
-    else:
-        print("Opção inválida. Por favor, escolha uma opção válida.")
+        adicionar_pessoa(pessoas)
 
-        asdlkasdsa
+    elif opcao == "2":
+        mostrar_pessoas(pessoas)
+
+    elif opcao == "3":
+        buscar_pessoa(pessoas)
+
+    elif opcao == "4":
+        remover_pessoa(pessoas)
+
+    elif opcao == "5":
+        limpar_pessoas(pessoas)
+
+    elif opcao == "6":
+        print("Saindo do sistema...")
+        break
+
+    else:
+        print("Opção inválida. Tente novamente.")
